@@ -1,10 +1,11 @@
 <?php include("..\dbconnect.php");
 
+//Check form has data
 if ( !isset($_POST['username'], $_POST['password']) ) {
     die ('Please fill both the username and password field!');
 }
 
-$stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
+$stmt = $db->prepare("SELECT id, password FROM users WHERE username = ?");
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $stmt->store_result();
