@@ -1,7 +1,10 @@
 <?php include("..\dbconnect.php");
 
+$username = $_POST['username'];
+$password = $_POST['password'];
+
 //Check form has data
-if ( !isset($_POST['username'], $_POST['password']) ) {
+if ( !isset($username, $password) ) {
     die ('Please fill both the username and password field!');
 }
 
