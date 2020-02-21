@@ -1,10 +1,10 @@
 <?php
 
 session_start();
-$DB_HOST = '';
-$DB_USER = '';
-$DB_PASS = '';
-$DB_NAME = '';
+$DB_HOST = 'gymappdatabase.mysql.database.azure.com';
+$DB_USER = 'gymappadmin';
+$DB_PASS = 'gymapppassword1!';
+$DB_NAME = 'gymapp';
 
 $db = mysqli_connect($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 
