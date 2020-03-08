@@ -1,6 +1,5 @@
 <?php
 
-session_start();
 $DB_HOST = 'sql309.epizy.com';
 $DB_USER = 'epiz_25235579';
 $DB_PASS = 'xaY6JAuPdkv2M';
