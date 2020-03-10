@@ -41,9 +41,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Validate Start Time
     $input_start_time = trim($_POST["start_time"]);
+    $input_start_time_test = substr($input_start_time, 0, -2);
     if(empty($input_start_time)) {
         $start_time_err = "Please enter a time";
-    } elseif(!preg_match("/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/", $input_start_time)) {
+    } elseif(!preg_match("/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/", $input_start_time_test)) {
         $start_time_err = "Please enter a valid time";
     } else {
         $start_time = $input_start_time;
@@ -51,15 +52,19 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Validate End Time
     $input_end_time = trim($_POST["end_time"]);
+    $input_end_time_test = substr($input_start_time, 0, -2);
     if(empty($input_end_time)) {
         $end_time_err = "Please enter a time";
-    } elseif(!preg_match("/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/", $input_end_time)) {
+    } elseif(!preg_match("/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/", $input_end_time_test)) {
         $end_time_err = "Please enter a valid time";
     } else {
         $end_time = $input_end_time;
     }
 
-    // Validate Cost
+    // Calculate Duration
+
+
+
     $input_salary = trim($_POST["salary"]);
     if(empty($input_salary)){
         $salary_err = "Please enter the salary amount.";
