@@ -63,27 +63,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Calculate Duration
 
-
-
-    $input_salary = trim($_POST["salary"]);
-    if(empty($input_salary)){
-        $salary_err = "Please enter the salary amount.";
-    } elseif(!ctype_digit($input_salary)){
-        $salary_err = "Please enter a positive integer value.";
-    } else{
-        $salary = $input_salary;
-    }
-
     //Validate Details
 
     // Check input errors before inserting in database
-    if(empty($title_err) && empty($address_err) && empty($salary_err)){
+    if(empty($title_error) && empty($date_error) && empty($start_time_error) && empty($end_time_error) && empty($duration_error) && empty($cost_error) && empty($date_error)){
         // Prepare an insert statement
-        $sql = "INSERT INTO employees (name, address, salary) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO classes (title, date, start_time, end_time, duration, salary, cost) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        if($stmt = mysqli_prepare($link, $sql)){
+        if($stmt = mysqli_prepare($db, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sss", $param_title, $param_address, $param_salary);
+            mysqli_stmt_bind_param($stmt, "sssssss", $param_title, $param_date, $param_start_time);
 
             // Set parameters
             $param_title = $title;
