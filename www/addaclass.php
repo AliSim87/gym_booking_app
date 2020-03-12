@@ -43,9 +43,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $input_start_time = trim($_POST["start_time"]);
     $input_start_time_test = substr($input_start_time, 0, -2);
     if(empty($input_start_time)) {
-        $start_time_err = "Please enter a time";
+        $start_time_error = "Please enter a time";
     } elseif(!preg_match("/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/", $input_start_time_test)) {
-        $start_time_err = "Please enter a valid time";
+        $start_time_error = "Please enter a valid time";
     } else {
         $start_time = $input_start_time;
     }
@@ -54,16 +54,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $input_end_time = trim($_POST["end_time"]);
     $input_end_time_test = substr($input_start_time, 0, -2);
     if(empty($input_end_time)) {
-        $end_time_err = "Please enter a time";
+        $end_time_error = "Please enter a time";
     } elseif(!preg_match("/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/", $input_end_time_test)) {
-        $end_time_err = "Please enter a valid time";
+        $end_time_error = "Please enter a valid time";
     } else {
         $end_time = $input_end_time;
     }
 
     // Calculate Duration
 
-    //Validate Details
+    // Validate Cost
+
+    // Validate Details
+    $input_details = trim($_POST["details"]);
+    if (empty($input_details)) {
+        $details_error = "Please enter further details";
+    } else{
+        $details = $input_details;
+    }
 
     // Check input errors before inserting in database
     if(empty($title_error) && empty($date_error) && empty($start_time_error) && empty($end_time_error) && empty($duration_error) && empty($cost_error) && empty($date_error)){
@@ -72,17 +80,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         if($stmt = mysqli_prepare($db, $sql)){
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sssssss", $param_title, $param_date, $param_start_time);
+            mysqli_stmt_bind_param($stmt, "sssssss", $param_title, $param_date, $param_start_time, $param_end_time, $param_duration, $param_cost, $param_details);
 
             // Set parameters
             $param_title = $title;
-            $param_address = $address;
-            $param_salary = $salary;
+            $param_date = $date;
+            $param_start_time = $start_time;
+            $param_end_time = $end_time;
+            $param_duration = $duration;
+            $param_cost = $cost;
+            $param_details = $details;
 
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 // Records created successfully. Redirect to landing page
-                header("location: index.php");
+                echo "Class Recorded";
                 exit();
             } else{
                 echo "Something went wrong. Please try again later.";
@@ -94,7 +106,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 
     // Close connection
-    mysqli_close($link);
+    mysqli_close($db);
 }
 ?>
 
@@ -133,10 +145,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
                 <p>Please fill this form and submit to add employee record to the database.</p>
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-                    <div class="form-group <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
+                    <div class="form-group <?php echo (!empty($title_error)) ? 'has-error' : ''; ?>">
                         <label>Name</label>
-                        <input type="text" name="name" class="form-control" value="<?php echo $name; ?>">
-                        <span class="help-block"><?php echo $name_err;?></span>
+                        <input type="text" name="name" class="form-control" value="<?php echo $title; ?>">
+                        <span class="help-block"><?php echo $title_error;?></span>
                     </div>
                     <div class="form-group <?php echo (!empty($date_err)) ? 'has-error' : ''; ?>">
                         <label>Address</label>
@@ -148,30 +160,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             </span>
                         </div>
                     </div>
-                    <div class="form-group <?php echo (!empty($start_time_err)) ? 'has-error' : ''; ?>">
+                    <div class="form-group <?php echo (!empty($start_time_error)) ? 'has-error' : ''; ?>">
                         <label>Start Time</label>
                         <div class='input-group date' id='datetimepicker3'>
                             <input type="text" name="start_time" class="form-control" value="<?php echo $start_time; ?>">
-                            <span class="help-block"><?php echo $start_time_err;?></span>
+                            <span class="help-block"><?php echo $start_time_error;?></span>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
                         </div>
                     </div>
-                    <div class="form-group <?php echo (!empty($end_time_err)) ? 'has-error' : ''; ?>">
+                    <div class="form-group <?php echo (!empty($end_time_error)) ? 'has-error' : ''; ?>">
                         <label>Start Time</label>
                         <div class='input-group date' id='datetimepicker3'>
                             <input type="text" name="end_time" class="form-control" value="<?php echo $end_time; ?>">
-                            <span class="help-block"><?php echo $end_time_err;?></span>
+                            <span class="help-block"><?php echo $end_time_error;?></span>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
                         </div>
                     </div>
-                    <div class="form-group <?php echo (!empty($salary_err)) ? 'has-error' : ''; ?>">
-                        <label>Salary</label>
-                        <input type="text" name="salary" class="form-control" value="<?php echo $salary; ?>">
-                        <span class="help-block"><?php echo $salary_err;?></span>
+                    <div class="form-group <?php echo (!empty($cost_error)) ? 'has-error' : ''; ?>">
+                        <label>Cost</label>
+                        <input type="number" name="cost" class="form-control" value="<?php echo $cost; ?>">
+                        <span class="help-block"><?php echo $cost_error;?></span>
+                    </div>
+                    <div class="form-group <?php echo (!empty($details_error)) ? 'has-error' : ''; ?>">
+                        <label>Details</label>
+                        <textarea name="details" rows="5" cols="40"></textarea>
+                        <span class="help-block"><?php echo $details_error;?></span>
                     </div>
                     <input type="submit" class="btn btn-primary" value="Submit">
                     <a href="index.php" class="btn btn-default">Cancel</a>

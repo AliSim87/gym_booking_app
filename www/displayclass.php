@@ -32,7 +32,7 @@
         <h1>Class List</h1>
         <a href="addaclass.php">Add New Class</a>
         <?php
-        require_once "../dbconnect.php";
+        require_once ".../dbconnect.php";
 
         $sql = "SELECT * FROM classes";
         if($result = mysqli_query($db, $sql)){
@@ -43,6 +43,7 @@
                 echo "<th>Title</th>";
                 echo "<th>Class Type</th>";
                 echo "<th>Date</th>";
+                echo "<th>Start-Time</th>";
                 echo "<th>Duration</th>";
                 echo "<th>Cost</th>";;
                 echo "</tr>";
@@ -53,6 +54,7 @@
                     echo "<td>" . $row['title'] . "</td>";
                     echo "<td>" . $row['classtype'] . "</td>";
                     echo "<td>" . $row['date'] . "</td>";
+                    echo "<td>" . $row['start_time'] . "</td>";
                     echo "<td>" . $row['duration'] . "</td>";
                     echo "<td>" . $row['cost'] . "</td>";
                     echo "<td>";
@@ -69,7 +71,7 @@
                 echo "<p class='lead'><em>No records were found.</em></p>";
             }
         } else{
-            echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($db);
         }
 
         mysqli_close($db);
