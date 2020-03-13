@@ -44,7 +44,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $input_start_time_test = substr($input_start_time, 0, -2);
     if(empty($input_start_time)) {
         $start_time_error = "Please enter a time";
-    } elseif(!preg_match("/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/", $input_start_time_test)) {
+    } elseif(!preg_match("/^(?:2[0-3]|[0-2][0-9]):[0-5][0-9]$/", $input_start_time_test)) {
         $start_time_error = "Please enter a valid time";
     } else {
         $start_time = $input_start_time;
@@ -55,15 +55,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $input_end_time_test = substr($input_start_time, 0, -2);
     if(empty($input_end_time)) {
         $end_time_error = "Please enter a time";
-    } elseif(!preg_match("/^(?:2[0-3]|[01][0-9]):[0-5][0-9]$/", $input_end_time_test)) {
+    } elseif(!preg_match("/^(?:2[0-3]|[0-2][0-9]):[0-5][0-9]$/", $input_end_time_test)) {
         $end_time_error = "Please enter a valid time";
     } else {
         $end_time = $input_end_time;
     }
 
     // Calculate Duration
+    $duration_start = strtotime($input_start_time_test + ":00");
+    $duration_end = strtotime($input_end_time_test + ":00");
+    $duration = $duration_start->diff($duration_end);
 
     // Validate Cost
+    $input_cost = ($_POST["cost"]);
+    if(empty($input_cost)) {
+        $cost_error = "Please enter a cost";
+    } elseif(!filter_var($input_cost, FILTER_VALIDATE_INT)) {
+        $cost_error = "Please enter a valid cost";
+    } else {
+        $cost = $input_cost;
+    }
 
     // Validate Details
     $input_details = trim($_POST["details"]);
@@ -193,5 +204,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <input type="submit" class="btn btn-primary" value="Submit">
                     <a href="index.php" class="btn btn-default">Cancel</a>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
 
 
