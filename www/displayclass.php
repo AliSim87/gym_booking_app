@@ -32,7 +32,7 @@
         <h1>Class List</h1>
         <a href="addaclass.php">Add New Class</a>
         <?php
-        require_once ".../dbconnect.php";
+        require_once "../dbconnect.php";
 
         $sql = "SELECT * FROM classes";
         if($result = mysqli_query($db, $sql)){
@@ -41,7 +41,6 @@
                 echo "<thead>";
                 echo "<tr>";
                 echo "<th>Title</th>";
-                echo "<th>Class Type</th>";
                 echo "<th>Date</th>";
                 echo "<th>Start-Time</th>";
                 echo "<th>Duration</th>";
@@ -52,7 +51,6 @@
                 while($row = mysqli_fetch_array($result)){
                     echo "<tr>";
                     echo "<td>" . $row['title'] . "</td>";
-                    echo "<td>" . $row['classtype'] . "</td>";
                     echo "<td>" . $row['date'] . "</td>";
                     echo "<td>" . $row['start_time'] . "</td>";
                     echo "<td>" . $row['duration'] . "</td>";

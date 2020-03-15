@@ -1,4 +1,4 @@
-<?php include("...\dbconnect.php");
+<?php include("../dbconnect.php");
 
 $username = $_POST['username'];
 $password = $_POST['password'];

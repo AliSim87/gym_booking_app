@@ -1,11 +1,11 @@
 <?php
-require_once ".../dbconnect.php";
+require_once "../dbconnect.php";
 
 $title = "";
 $date = "";
 $start_time = "";
 $end_time = "";
-$duration = "";
+$duration = "0";
 $cost = "";
 $details = "";
 
@@ -21,30 +21,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Validate Title
     $input_title = trim($_POST["title"]);
     if(empty($input_title)){
-        $title_err = "Please enter a title.";
+        $title_error = "Please enter a title.";
     } elseif(!filter_var($input_title, FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z\s]+$/")))){
-        $title_err = "Please enter a valid title.";
+        $title_error = "Please enter a valid title.";
     } else{
         $title = $input_title;
     }
 
     // Validate Date
     $input_date = trim($_POST["date"]);
-    $input_date_test = str.slice(0,8);
+    $input_date_test = explode(":", $input_date, 3);
     if(empty($input_date)) {
-        $date_err = "Please enter a date";
-    } elseif(!checkdate($input_date_test[0], $input_date_test[1], $input_date_test[2])) {
-        $date_err = "Please enter a valid date";
+        $date_error = "Please enter a date";
+    } elseif(!checkdate($input_date_test[1], $input_date_test[0], $input_date_test[2])) {
+        $date_error = "Please enter a valid date";
     } else {
         $date = $input_date;
     }
 
     // Validate Start Time
     $input_start_time = trim($_POST["start_time"]);
-    $input_start_time_test = substr($input_start_time, 0, -2);
+    $input_start_time_test = substr($input_start_time, 0, -3);
     if(empty($input_start_time)) {
         $start_time_error = "Please enter a time";
-    } elseif(!preg_match("/^(?:2[0-3]|[0-2][0-9]):[0-5][0-9]$/", $input_start_time_test)) {
+    } elseif(!preg_match("/^(?:1[012]|0[0-9]):[0-5][0-9]$/", $input_start_time_test)) {
         $start_time_error = "Please enter a valid time";
     } else {
         $start_time = $input_start_time;
@@ -52,20 +52,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     // Validate End Time
     $input_end_time = trim($_POST["end_time"]);
-    $input_end_time_test = substr($input_start_time, 0, -2);
+    $input_end_time_test = substr($input_start_time, 0, -3);
     if(empty($input_end_time)) {
         $end_time_error = "Please enter a time";
-    } elseif(!preg_match("/^(?:2[0-3]|[0-2][0-9]):[0-5][0-9]$/", $input_end_time_test)) {
+    } elseif(!preg_match("/^(?:1[012]|0[0-9]):[0-5][0-9]$/", $input_end_time_test)) {
         $end_time_error = "Please enter a valid time";
     } else {
         $end_time = $input_end_time;
     }
-
+/*
     // Calculate Duration
     $duration_start = strtotime($input_start_time_test + ":00");
     $duration_end = strtotime($input_end_time_test + ":00");
     $duration = $duration_start->diff($duration_end);
-
+*/
     // Validate Cost
     $input_cost = ($_POST["cost"]);
     if(empty($input_cost)) {
@@ -87,7 +87,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     // Check input errors before inserting in database
     if(empty($title_error) && empty($date_error) && empty($start_time_error) && empty($end_time_error) && empty($duration_error) && empty($cost_error) && empty($date_error)){
         // Prepare an insert statement
-        $sql = "INSERT INTO classes (title, date, start_time, end_time, duration, salary, cost) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO classes (title, date, start_time, end_time, duration, cost, details) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         if($stmt = mysqli_prepare($db, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -110,10 +110,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             } else{
                 echo "Something went wrong. Please try again later.";
             }
+			mysqli_stmt_close($stmt);
         }
 
         // Close statement
-        mysqli_stmt_close($stmt);
+        
     }
 
     // Close connection
@@ -139,8 +140,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     </style>
     <script type="text/javascript">
+	$(function () {
+            $('#datetimepicker').datetimepicker({
+                format: 'DD:MM:YYYY'
+            });
+        });
         $(function () {
             $('#datetimepicker3').datetimepicker({
+                format: 'LT'
+            });
+        });
+		$(function () {
+            $('#datetimepicker4').datetimepicker({
                 format: 'LT'
             });
         });
@@ -154,18 +165,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 <div class="page-header">
                     <h2>Create Class</h2>
                 </div>
-                <p>Please fill this form and submit to add employee record to the database.</p>
+                <p>Please fill this form and submit to add class record to the database.</p>
                 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <div class="form-group <?php echo (!empty($title_error)) ? 'has-error' : ''; ?>">
-                        <label>Name</label>
-                        <input type="text" name="name" class="form-control" value="<?php echo $title; ?>">
+                        <label>Title</label>
+                        <input type="text" name="title" class="form-control" value="<?php echo $title; ?>">
                         <span class="help-block"><?php echo $title_error;?></span>
                     </div>
-                    <div class="form-group <?php echo (!empty($date_err)) ? 'has-error' : ''; ?>">
-                        <label>Address</label>
-                        <div class='input-group date' id='datetimepicker3'>
+                    <div class="form-group <?php echo (!empty($date_error)) ? 'has-error' : ''; ?>">
+                        <label>Date</label>
+                        <div class='input-group date' id='datetimepicker'>
                             <input type="text" name="date" class="form-control" value="<?php echo $date; ?>">
-                            <span class="help-block"><?php echo $date_err;?></span>
+                            <span class="help-block"><?php echo $date_error;?></span>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-calendar"></span>
                             </span>
@@ -182,8 +193,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         </div>
                     </div>
                     <div class="form-group <?php echo (!empty($end_time_error)) ? 'has-error' : ''; ?>">
-                        <label>Start Time</label>
-                        <div class='input-group date' id='datetimepicker3'>
+                        <label>End Time</label>
+                        <div class='input-group date' id='datetimepicker4'>
                             <input type="text" name="end_time" class="form-control" value="<?php echo $end_time; ?>">
                             <span class="help-block"><?php echo $end_time_error;?></span>
                             <span class="input-group-addon">

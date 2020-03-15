@@ -1,4 +1,4 @@
-<?php include("...\dbconnect.php");
+<?php include ("../dbconnect.php");
 
 $username = $_POST['username'];
 $password = $_POST['password'];
@@ -15,7 +15,7 @@ if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 //Check for invalid characters in username
-if (preg_match('/[A-Za-z0-9]', $username) == 0) {
+if (preg_match('/[A-Za-z0-9]/', $username) == 0) {
     die ('Username is not valid');
 }
 
@@ -32,7 +32,7 @@ if ($stmt = $db->prepare("SELECT id, password FROM users WHERE username = ?")) {
     if ($stmt->num_rows > 0) {
         echo 'Username already exists';
     } else {
-        if ($stmt = $db->prepare("INSERT INTO users (username, password, email)")) {
+        if ($stmt = $db->prepare("INSERT INTO users (username, password, email) VALUES (?, ?, ?)")) {
             $stmt->bind_param("sss", $username, $password, $email);
             $stmt->execute();
             echo 'Registration Successful';
@@ -44,5 +44,4 @@ if ($stmt = $db->prepare("SELECT id, password FROM users WHERE username = ?")) {
 } else {
     echo 'Something has gone very wrong';
 }
-$stmt->close();
 
