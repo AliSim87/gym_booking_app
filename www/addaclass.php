@@ -62,8 +62,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 /*
     // Calculate Duration
-    $duration_start = strtotime($input_start_time_test + ":00");
-    $duration_end = strtotime($input_end_time_test + ":00");
+    $duration_start = strtotime($input_start_time_test);
+    $duration_end = strtotime($input_end_time_test);
     $duration = $duration_start->diff($duration_end);
 */
     // Validate Cost
