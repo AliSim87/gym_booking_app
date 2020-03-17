@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Rockdale Gym | Sign Up</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/register.css">
+		<link rel="stylesheet" href="css/bootstrap.css">
+	</head>
+	<style>a.navbar-brand:hover{color:#fff !important;}</style>
+	<body>
+		<header role="banner">
+			<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+			  <div class="container">
+				<a class="navbar-brand" href="index.html"><span>Rockdale</span>  Gym</a>
+			  </div>
+			</nav>
+		  </header>
+		<div class="wrapper" style="background-image: url('img/bg-registration-form-2.jpg');">
+			<div class="inner">
+				<form action="register.php" method="POST">
+					<br>
+					<h3>Create an Account</h3>
+					<div class="form-group">
+					</div>
+					<div class="form-wrapper">
+						<input type="text" class="form-control" name="username" placeholder="Username" minlength="5" maxlength="10" required>
+					</div>
+					<div class="form-wrapper">
+						<br><br>
+						<input type="email" class="form-control" name="email" placeholder="Email" minlength="8" required>
+					</div>
+					<div class="form-wrapper">
+						<br><br>
+						<input type="password" class="form-control" name="password" placeholder="Password" required>
+					</div>
+					<p class="message">Already registered? <a href="login.html"> Login here</a></p><br>
+					<button>Register Now</button>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
