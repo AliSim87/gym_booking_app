@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9d68b84d-3fd8-46aa-baae-aa60482d535f" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="ProjectId" id="1ZHAQiMufJLaj49Y1f1F02in5p0" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\Lenov\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9d68b84d-3fd8-46aa-baae-aa60482d535f" name="Default Changelist" comment="" />
+      <created>1584485631051</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1584485631051</updated>
+      <workItem from="1584485632223" duration="505000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="***NOTE*** Do not alter any of the file paths. All required files are in specific folders. Tested. All pages work including php connection to database and registration. &#10;This is my part for the project. &#10;&#10;I have updated the entire website using various bootstrap 4 templates. I have updated the homepage, login page, register page, membership page and contact us page. I have also added admin.php file which links the member to the admin dashboard.&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="***NOTE*** Do not alter any of the file paths. All required files are in specific folders. Tested. All pages work including php connection to database and registration. &#10;This is my part for the project. &#10;&#10;I have updated the entire website using various bootstrap 4 templates. I have updated the homepage, login page, register page, membership page and contact us page. I have also added admin.php file which links the member to the admin dashboard.&#10;" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="580" y="180" key="FileChooserDialogImpl" timestamp="1584485698719">
+      <screen x="0" y="0" width="1600" height="870" />
+    </state>
+    <state x="580" y="180" key="FileChooserDialogImpl/0.0.1600.870@0.0.1600.870" timestamp="1584485698719" />
+    <state x="630" y="229" key="svn.repositoryBrowser" timestamp="1584486074022">
+      <screen x="0" y="0" width="1600" height="870" />
+    </state>
+    <state x="630" y="229" key="svn.repositoryBrowser/0.0.1600.870@0.0.1600.870" timestamp="1584486074022" />
+    <state x="611" y="222" key="svn4idea.import.options" timestamp="1584486070097">
+      <screen x="0" y="0" width="1600" height="870" />
+    </state>
+    <state x="611" y="222" key="svn4idea.import.options/0.0.1600.870@0.0.1600.870" timestamp="1584486070097" />
+  </component>
+</project>
