@@ -1,4 +1,6 @@
 <?php
 session_start();
 session_destroy();
-header("location: index.php");
+// Redirect to the login page:
+header('Location: index.html');
+?>
