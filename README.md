@@ -1,4 +1,4 @@
-# CMM004 Software Project Engineering   https://aodare90.github.io/rockgym.github.io/
+# CMM004 Software Project Engineering   https://aodare90.github.io/rockgym.github.io/ (static)
 
 Project Guidelines
 
