@@ -21,8 +21,6 @@ To strealimine scheduling processes. To help gyms keep track of both employees a
 # Goal
 Gym Members can book and see available classes.
 
-Gym Instructors can see members in their class.
-
 Gym Instructors can see classes and add a new class they are teaching.
 
 Gym Adminstrator can add gym class, gym instructor, gym member.
