@@ -26,4 +26,3 @@ Gym Instructors can see classes and add a new class they are teaching.
 Gym Adminstrator can add gym class, gym instructor, gym member.
 
 Gym Adminstrator can see all classes, members and instructors.
-
