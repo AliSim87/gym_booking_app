@@ -3,37 +3,34 @@
 session_start();
 // If the user is not logged in redirect to the login page...
 if (!isset($_SESSION['loggedin'])) {
-    header('Location: login.html');
+    header('Location: ../login.html');
     exit;
 }
-?>
 
+?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard | Rockdale Gym</title>
+    <title>Rockdale Gym | Classes</title>
     <meta name="description"
         content="Join Rockdale today to achieve your fitness goals! Everybody is Welcome - Join today!">
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="../assets/fonts/fontawesome-all.min.css">
-    <script type='text/javascript'>
-    // confirm record deletion
-    function cancel_class(id) {
 
+    <script type='text/javascript'>
+    // confirm record cancel
+    function cancel_class(id) {
         var answer = confirm('Are you sure?');
         if (answer) {
-            // if user clicked ok,
-            // pass the id to delete.php and execute the delete query
             window.location = 'cancelclass.php?id=' + id;
         }
     }
     </script>
-
 </head>
 <style>
 .bg-gradient-primary {
@@ -105,89 +102,63 @@ if (!isset($_SESSION['loggedin'])) {
                     </div>
                 </nav>
                 <div class="container-fluid">
-                    <h3 class="text-dark mb-1">Welcome back <?= $_SESSION['name'] ?>!</h3>
-                    <p> Thank so much for being a part of Rockdale Gym!</p>
-
-
-
-                    <!-- edit by luguangfu -->
-
-                    <!-- <p><img src="../img/thanks.jpg" height="650" width="800"></p> -->
-                </div>
-
-                <!-- edit by luguangfu -->
-
-                <!-- <div class="container-fluid">
-                <?php if ($_SESSION['user_level'] == 'user') {
-                    echo "<h3 class='text-dark mb-1' > Upcoming Classes </h3>";
+                    <?php
+                    $id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
 
                     include '../../dbconnect.php';
 
-                    $action = isset($_GET['action']) ? $_GET['action'] : "";
+                    try {
+                        $sql = "SELECT * FROM classes WHERE id = ? LIMIT 0,1";
+                        $stmt = $db->prepare($sql);
+                        $stmt->bind_param("i", $id);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        $row = $result->fetch_assoc();
+                        $classid = $row['id'];
 
-                    if ($action == 'cancelled') {
-                        echo "<div class='alert alert-success'>Class was cancelled.</div>";
+                        // echo " $classid=====" . $classid;
+                    } catch (PDOException $exception) {
+                        die('ERROR: ' . $exception->getMessage());
                     }
+                    ?>
 
-                    $user_id = $_SESSION['id'];
-
-                    $sql = "SELECT * FROM bookings JOIN users ON bookings.userid = users.id JOIN classes ON bookings.classid = classes.id WHERE userid = $user_id";
-                    if ($result = mysqli_query($db, $sql)) {
-                        if (mysqli_num_rows($result) > 0) {
-
-                            echo "<table class='table table-hover table-responsive table-bordered'>";
-
-                            echo "<tr>";
-                            echo "<th>Title</th>";
-                            echo "<th>Date</th>";
-                            echo "<th>Start Time</th>";
-                            echo "<th>Duration</th>";
-                            echo "<th>Instructor</th>";
-                            echo "<th>Cost</th>";
-                            echo "</tr>";
-
-
-                            while ($row = mysqli_fetch_array($result)) {
-                                extract($row);
-
-                                echo "<tr>";
-                                echo "<td>{$title}</td>";
-                                echo "<td>{$date}</td>";
-                                echo "<td>{$start_time}</td>";
-                                echo "<td>{$duration}</td>";
-                                echo "<td>{$instructor}</td>";
-                                echo "<td>&#163;{$cost}</td>";
-                                echo "<td>";
-                                echo "<a style='margin-right: 5px;' href='viewaclass.php?id={$classid}' class='btn btn-info m-r-1em'>More Information</a>";
-                                echo "<a href='#' onclick='cancel_class({$bookingnumber})' class='btn btn-info m-r-1em'>Cancel</a>";
-                                echo "</td>";
-                                echo "</tr>";
-                            }
-
-                            // end table
-                            echo "</table>";
-
-                            mysqli_free_result($result);
-                        } else {
-                            echo "<p class='lead'><em>No records were found.</em></p>";
-                        }
-                    } else {
-                        echo "ERROR: Could not able to execute $sql. " . mysqli_error($db);
-                    }
-
-                    mysqli_close($db);
-                }
-                ?>
-            </div> -->
-
-
-
-                <!-- edit by luguangfu -->
-
-                <div class="container-fluid" id="calendarDiv">
-                    <div id='calendar' height="400" width="600" id="calendarDev"></div>
+                    <table class='table table-hover table-responsive table-bordered'>
+                        <tr>
+                            <td>Title</td>
+                            <td><?php echo htmlspecialchars($row['title'], ENT_QUOTES); ?></td>
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td><?php echo htmlspecialchars($row['date'], ENT_QUOTES); ?></td>
+                        </tr>
+                        <tr>
+                            <td>Start Time</td>
+                            <td><?php echo htmlspecialchars($row['start_time'], ENT_QUOTES); ?></td>
+                        </tr>
+                        <tr>
+                            <td>Duration</td>
+                            <td><?php echo htmlspecialchars($row['duration'], ENT_QUOTES); ?></td>
+                        </tr>
+                        <tr>
+                            <td>Instructor</td>
+                            <td><?php echo htmlspecialchars($row['instructor'], ENT_QUOTES); ?></td>
+                        </tr>
+                        <tr>
+                            <td>Price</td>
+                            <td><?php echo htmlspecialchars($row['cost'], ENT_QUOTES); ?></td>
+                        </tr>
+                        <tr>
+                            <td>Details</td>
+                            <td><?php echo htmlspecialchars($row['details'], ENT_QUOTES); ?></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <a href='#' id="cancelclass" class='btn btn-info m-r-1em'>Cancel</a>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-
             </div>
         </div>
     </div>
@@ -202,51 +173,21 @@ if (!isset($_SESSION['loggedin'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="../assets/js/theme.js"></script>
 
-
-
-    <link href='https://unpkg.com/@fullcalendar/core@4.4.0/main.min.css' rel='stylesheet' />
-    <link href='https://unpkg.com/@fullcalendar/daygrid@4.4.0/main.min.css' rel='stylesheet' />
-    <link href='https://unpkg.com/@fullcalendar/timegrid@4.4.0/main.min.css' rel='stylesheet' />
-    <script src='https://unpkg.com/@fullcalendar/core@4.4.0/main.min.js'></script>
-    <script src='https://unpkg.com/@fullcalendar/interaction@4.4.0/main.min.js'></script>
-    <script src='https://unpkg.com/@fullcalendar/daygrid@4.4.0/main.min.js'></script>
-    <script src='https://unpkg.com/@fullcalendar/timegrid@4.4.0/main.min.js'></script>
-    <!-- edit by luguangfu -->
-
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    var user_level = "<?php echo $_SESSION['user_level']; ?>";
 
-        initCalendar()
+    //If not a user, hide the cancel function
+    if (user_level != "user")
+        $('#cancelclass').hide();
 
-    });
+    $('#cancelclass').on('click', function() {
 
-    function initCalendar() {
-        //Get current date
-        var myDate = new Date();
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            plugins: ['interaction', 'dayGrid', 'timeGrid'],
-            allDaySlot: false, //Whether to show all-day
-            //The default view at initialization displays the week by default
-            defaultView: 'timeGridWeek',
-            //Display date by default
-            defaultDate: myDate,
-            minTime: '08:00:00', //The time on the left starts from
-            maxTime: '22:00:00', //What time does the left end
-            height: 500,
-            //Information on top
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-            },
-            events: 'myCalendar.php?do=initCalendar'
-        });
+        var id = "<?php echo $classid; ?>";
 
-        calendar.render();
-
-    }
+        cancel_class(id);
+    })
     </script>
+
 </body>
 
 </html>
