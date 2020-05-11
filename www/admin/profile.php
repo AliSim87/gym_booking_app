@@ -52,12 +52,16 @@ if (!isset($_SESSION['loggedin'])) {
                                 class="fas fa-user"></i><span>Profile</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="classes.php"><i
                                 class="fas fa-table"></i><span>Classes</span></a></li>
+
+                    <!-- eidt by  luguangfu Fix menu errors-->
                     <?php if ($_SESSION['user_level'] == 'admin') {
                         echo '<li class="nav-item" role="presentation"><a class="nav-link" data-toggle="collapse" href="#collapse1">User Management</a></li><div id="collapse1" class="panel-collapse collapse">
+<ul class="list-group">
+<li class="nav-item" role="presentation"><a class="nav-link" href="userman/viewusers.php"><i
                                 class="fas fa-user"></i><span>See All Users</span></a></li>
-                               <li class="nav-item" role="presentation"><a class="nav-link" href="userman/adduser.php"><i
+        <li class="nav-item" role="presentation"><a class="nav-link" href="userman/adduser.php"><i
                                 class="fas fa-user"></i><span>Add User</span></a></li>
-                              </ul>';
+      </ul>';
                     }; ?>
                 </ul>
                 <div class="text-center d-none d-md-inline">
