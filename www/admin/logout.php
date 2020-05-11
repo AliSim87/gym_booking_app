@@ -1,4 +1,7 @@
 <?php
 session_start();
 session_destroy();
-header("location: ../index.php");
+
+// edit by  luguangfu  Fix exit exception
+
+header("location: ../index.html");
