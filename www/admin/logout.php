@@ -4,4 +4,4 @@ session_destroy();
 
 // edit by  luguangfu  Fix exit exception
 
-header("location: ../index.html");
+header("location: ../www/index.html");
